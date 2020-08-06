@@ -1,21 +1,26 @@
-const Player = require('../models/Player');
+// const User = require('../models/User');
+const CreateUserService = require('../services/CreateUserService');
 
 module.exports = {
   async create(request, response) {
-    const { name, password, email } = request.body;
+    try {
+      const { name, password, email } = request.body;
 
-    const user = { name, password, email };
+      const createUser = new CreateUserService();
 
-    // save
+      const user = createUser.execute({ name, password, email });
 
-    delete user.password;
+      delete user.password;
 
-    return response.json(user);
+      return response.json(user);
+    } catch (err) {
+      return response.status(400).json(err.message);
+    }
   },
 
   async index(request, response) {
-    const user = await Player.find();
+    // const user = await Player.find();
 
-    return response.json(user);
+    return response.json({ message: 'ok' });
   },
 };
