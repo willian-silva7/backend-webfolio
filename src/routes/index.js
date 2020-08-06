@@ -1,12 +1,13 @@
 const { Router } = require('express');
 
-// const nameteamsRouter = require('./nameteams.routes');
+const userRouter = require('./users.routes');
 
 const routes = Router();
 
 routes.get('/', (request, response) => {
   return response.json({ message: 'Hello World' });
 });
-// routes.use('/teamname', nameteamsRouter);
+
+routes.use('/users', userRouter);
 
 module.exports = routes;
