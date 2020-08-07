@@ -1,13 +1,16 @@
-const AuthenticateService = require('../services/AuthenticateUserService');
+const AuthenticateUserService = require('../services/AuthenticateUserService');
 
 module.exports = {
   async index(request, response) {
     try {
       const { email, password } = request.body;
 
-      const authenticateService = new AuthenticateService();
+      const authenticateUserService = new AuthenticateUserService();
 
-      const { user } = authenticateService.execute({ email, password });
+      const { user } = await authenticateUserService.execute({
+        email,
+        password,
+      });
 
       delete user.password;
 

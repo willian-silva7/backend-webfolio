@@ -1,22 +1,22 @@
 const { compare } = require('bcryptjs');
 const User = require('../models/User');
 
-class AuthenticateService {
+class AuthenticateUserService {
   async execute({ email, password }) {
-    this.user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ email: `${email}` });
 
-    if (!this.user) {
+    if (!user) {
       throw new Error('incorrect email/password combination');
     }
 
-    const passwordMatched = compare(password, this.user.password);
+    const passwordMatched = await compare(password, user.password);
 
-    if (!passwordMatched) {
+    if (passwordMatched === false) {
       throw new Error('incorrect email/password combination');
     }
 
-    return this.user;
+    return { user };
   }
 }
 
-module.exports = AuthenticateService;
+module.exports = AuthenticateUserService;

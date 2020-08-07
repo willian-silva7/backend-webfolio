@@ -1,6 +1,15 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./routes');
+
+mongoose.connect(
+  'mongodb+srv://omnistack:omnistack@omnistack-0stko.mongodb.net/webfolio?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+); // conectar mongoose
 
 const app = express();
 

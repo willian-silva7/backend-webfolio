@@ -1,4 +1,4 @@
-// const User = require('../models/User');
+const User = require('../models/User');
 const CreateUserService = require('../services/CreateUserService');
 
 module.exports = {
@@ -7,11 +7,9 @@ module.exports = {
       const { name, password, email } = request.body;
 
       const createUser = new CreateUserService();
-      console.log('chego aqui');
 
       const user = await createUser.execute({ name, password, email });
 
-      console.log(user);
       delete user.password;
 
       return response.json(user);
@@ -21,8 +19,9 @@ module.exports = {
   },
 
   async index(request, response) {
-    // const user = await Player.find();
+    const nomeEmail = 'will@hotmail.com';
+    const users = await User.findOne({ email: `${nomeEmail}` });
 
-    return response.json({ message: 'ok' });
+    return response.json(users);
   },
 };
