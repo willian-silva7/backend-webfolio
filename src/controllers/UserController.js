@@ -7,9 +7,11 @@ module.exports = {
       const { name, password, email } = request.body;
 
       const createUser = new CreateUserService();
+      console.log('chego aqui');
 
-      const user = createUser.execute({ name, password, email });
+      const user = await createUser.execute({ name, password, email });
 
+      console.log(user);
       delete user.password;
 
       return response.json(user);
