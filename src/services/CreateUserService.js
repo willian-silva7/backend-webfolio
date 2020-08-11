@@ -11,7 +11,13 @@ class CreateUserService {
 
     const passwordHashed = await hash(password, 8);
 
-    const user = await User.create({ name, email, password: passwordHashed });
+    const user = await User.create({
+      name,
+      email,
+      password: passwordHashed,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
 
     return user;
   }
