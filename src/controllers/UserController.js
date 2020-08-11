@@ -21,7 +21,7 @@ module.exports = {
   async index(request, response) {
     const nomeEmail = 'will@hotmail.com';
     const users = await User.findOne({ email: `${nomeEmail}` });
-
+    // const user = users.remove();
     return response.json(users);
   },
 };
