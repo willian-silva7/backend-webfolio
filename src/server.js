@@ -8,6 +8,7 @@ const routes = require('./routes');
 mongoose.connect(process.env.MONGO_SECRET, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 }); // conectar mongoose
 
 const app = express();
