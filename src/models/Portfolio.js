@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const PortfolioSchema = new mongoose.Schema({
   nameChildren: { type: String, required: true },
-  observations: [{ type: String }],
+  observations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Observation' }],
   educator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

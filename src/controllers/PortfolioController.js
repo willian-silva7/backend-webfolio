@@ -37,9 +37,10 @@ module.exports = {
     try {
       const { portfolio_id } = request.params;
 
-      const portfolio = await Portfolio.findById(portfolio_id).populate(
+      const portfolio = await Portfolio.findById(portfolio_id).populate([
         'educator',
-      );
+        'observations',
+      ]);
 
       return response.json(portfolio);
     } catch (err) {

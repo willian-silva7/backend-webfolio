@@ -9,6 +9,7 @@ mongoose.connect(process.env.MONGO_SECRET, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 }); // conectar mongoose
 
 const app = express();
