@@ -1,12 +1,13 @@
 const { verify } = require('jsonwebtoken');
 const authConfig = require('../config/auth');
+const AppError = require('../errors/AppError');
 
 module.exports = function ensureAuthenticated(request, response, next) {
   // validação do Token JWT
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new Error('JWT token is missing');
+    throw new AppError('JWT token is missing', 401);
   }
 
   const [, token] = authHeader.split(' ');
@@ -24,6 +25,6 @@ module.exports = function ensureAuthenticated(request, response, next) {
 
     return next();
   } catch (err) {
-    throw new Error('Invalid JWT token', 401);
+    throw new AppError('Invalid JWT token', 401);
   }
 };

@@ -3,40 +3,32 @@ const CreatePortfolioService = require('../services/CreatePortfolioService');
 
 module.exports = {
   async create(request, response) {
-    try {
-      const { nameChildren } = request.body;
-      const { id } = request.user;
+    const { nameChildren } = request.body;
+    const { id } = request.user;
 
-      const portifolioService = new CreatePortfolioService();
+    const portifolioService = new CreatePortfolioService();
 
-      const portfolio = await portifolioService.execute({
-        nameChildren,
-        id,
-      });
+    const portfolio = await portifolioService.execute({
+      nameChildren,
+      id,
+    });
 
-      return response.json(portfolio);
-    } catch (err) {
-      return response.status(400).json(err.message);
-    }
+    return response.json(portfolio);
   },
 
   async index(request, response) {
-    try {
-      const { id } = request.user;
-      const portfolios = await Portfolio.find({
-        educator: id,
-      }).populate('educator');
+    const { id } = request.user;
+    const portfolios = await Portfolio.find({
+      educator: id,
+    }).populate('educator');
 
-      return response.json(portfolios);
-    } catch (err) {
-      return response.status(400).json('Erro ao carregar Portfolios');
-    }
+    return response.json(portfolios);
   },
 
   async show(request, response) {
-    try {
-      const { portfolio_id } = request.params;
+    const { portfolio_id } = request.params;
 
+    try {
       const portfolio = await Portfolio.findById(portfolio_id).populate([
         'educator',
         'observations',
@@ -44,14 +36,15 @@ module.exports = {
 
       return response.json(portfolio);
     } catch (err) {
-      return response.status(400).json('Erro ao carregar Portfolio');
+      return response
+        .status(400)
+        .json('Erro ao encontrar o protfolio, tente novamente');
     }
   },
 
   async delete(request, response) {
+    const { portfolio_id } = request.params;
     try {
-      const { portfolio_id } = request.params;
-
       const portfolio = await Portfolio.findByIdAndDelete(portfolio_id);
 
       return response.json(portfolio);

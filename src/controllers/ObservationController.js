@@ -1,29 +1,27 @@
 const Portfolio = require('../models/Portfolio');
 const Observation = require('../models/Observation');
+const DeleteObservation = require('../services/DeleteObservation');
 
 module.exports = {
   async create(request, response) {
-    try {
-      const { title, description, curriculum_parameters, file } = request.body;
-      const { portfolio_id } = request.params;
+    const { title, description, curriculum_parameters, file } = request.body;
+    const { portfolio_id } = request.params;
 
-      const portfolio = await Portfolio.findById(portfolio_id);
+    const portfolio = await Portfolio.findById(portfolio_id);
 
-      const observation = await Observation.create({
-        title,
-        description,
-        curriculum_parameters,
-        file,
-      });
+    const observation = await Observation.create({
+      title,
+      description,
+      curriculum_parameters,
+      file,
+    });
 
-      portfolio.observations.push(observation);
+    portfolio.observations.push(observation);
 
-      await portfolio.save();
+    await portfolio.save();
 
-      return response.json(observation);
-    } catch (err) {
-      return response.status(400).json(err.message);
-    }
+    return response.json(observation);
+    // return response.status(400).json(err.message);
   },
 
   async update(request, response) {
@@ -35,50 +33,36 @@ module.exports = {
   },
 
   async index(request, response) {
-    try {
-      const { id } = request.user;
-      const portfolios = await Portfolio.find({
-        educator: id,
-      }).populate('educator');
+    const { id } = request.user;
+    const portfolios = await Portfolio.find({
+      educator: id,
+    }).populate('educator');
 
-      return response.json(portfolios);
-    } catch (err) {
-      return response.status(400).json('Erro ao carregar Portfolios');
-    }
+    return response.json(portfolios);
+    // return response.status(400).json('Erro ao carregar Portfolios');
   },
 
   async show(request, response) {
-    try {
-      const { portfolio_id } = request.params;
+    const { portfolio_id } = request.params;
 
-      const portfolio = await Portfolio.findById(portfolio_id).populate(
-        'educator',
-      );
+    const portfolio = await Portfolio.findById(portfolio_id).populate(
+      'educator',
+    );
 
-      return response.json(portfolio);
-    } catch (err) {
-      return response.status(400).json('Erro ao carregar Portfolio');
-    }
+    return response.json(portfolio);
+    // return response.status(400).json('Erro ao carregar Portfolio');
   },
 
   async delete(request, response) {
-    try {
-      const { observation_id, portfolio_id } = request.params;
+    const { observation_id, portfolio_id } = request.params;
 
-      console.log(observation_id);
-      console.log(portfolio_id);
+    const deleteObservation = new DeleteObservation();
 
-      const portfolio = await Portfolio.findById(portfolio_id).populate(
-        'educator',
-      );
+    const portfolio = await deleteObservation.execute({
+      observation_id,
+      portfolio_id,
+    });
 
-      await Observation.findByIdAndDelete(observation_id);
-
-      await portfolio.save();
-
-      return response.json(portfolio);
-    } catch (err) {
-      return response.status(400).json('Erro ao deletar Portfolio');
-    }
+    return response.json(portfolio);
   },
 };

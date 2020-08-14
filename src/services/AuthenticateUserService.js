@@ -3,19 +3,20 @@ const { sign } = require('jsonwebtoken');
 
 const authConfig = require('../config/auth');
 const User = require('../models/User');
+const AppError = require('../errors/AppError');
 
 class AuthenticateUserService {
   async execute({ email, password }) {
     const user = await User.findOne({ email: `${email}` });
 
     if (!user) {
-      throw new Error('Incorrect email/password combination');
+      throw new AppError('Incorrect email/password combination', 401);
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (passwordMatched === false) {
-      throw new Error('Incorrect email/password combination');
+      throw new AppError('Incorrect email/password combination', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;
