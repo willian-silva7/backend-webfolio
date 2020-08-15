@@ -2,7 +2,7 @@ const User = require('../models/User');
 const Portfolio = require('../models/Portfolio');
 const AppError = require('../errors/AppError');
 
-class CreateUserService {
+class CreatePortifolioService {
   async execute({ nameChildren, id }) {
     const user = await User.findById(id);
 
@@ -23,4 +23,4 @@ class CreateUserService {
   }
 }
 
-module.exports = CreateUserService;
+module.exports = CreatePortifolioService;

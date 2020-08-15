@@ -1,5 +1,6 @@
 const Portfolio = require('../models/Portfolio');
 const CreatePortfolioService = require('../services/CreatePortfolioService');
+const AppError = require('../errors/AppError');
 
 module.exports = {
   async create(request, response) {
@@ -22,34 +23,35 @@ module.exports = {
       educator: id,
     }).populate('educator');
 
+    if (!portfolios) {
+      throw new AppError('Erro ao encontrar o portfolio, tente novamente');
+    }
+
     return response.json(portfolios);
   },
 
   async show(request, response) {
     const { portfolio_id } = request.params;
+    const portfolio = await Portfolio.findById(portfolio_id).populate([
+      'educator',
+      'observations',
+    ]);
 
-    try {
-      const portfolio = await Portfolio.findById(portfolio_id).populate([
-        'educator',
-        'observations',
-      ]);
-
-      return response.json(portfolio);
-    } catch (err) {
-      return response
-        .status(400)
-        .json('Erro ao encontrar o protfolio, tente novamente');
+    if (!portfolio) {
+      throw new AppError('Erro ao encontrar o portfolio, tente novamente');
     }
+
+    return response.json(portfolio);
   },
 
   async delete(request, response) {
     const { portfolio_id } = request.params;
-    try {
-      const portfolio = await Portfolio.findByIdAndDelete(portfolio_id);
+    const portfolio = await Portfolio.findByIdAndDelete(portfolio_id);
 
-      return response.json(portfolio);
-    } catch (err) {
-      return response.status(400).json('Erro ao deletar Portfolio');
+    if (!portfolio) {
+      throw new AppError('Erro ao deletar Portfolio');
     }
+
+    return response.json(portfolio);
   },
 };

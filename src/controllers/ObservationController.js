@@ -1,27 +1,26 @@
 const Portfolio = require('../models/Portfolio');
 const Observation = require('../models/Observation');
-const DeleteObservation = require('../services/DeleteObservation');
+const DeleteObservationService = require('../services/DeleteObservationService');
+const CreateObservationService = require('../services/CreateObservationService');
 
 module.exports = {
   async create(request, response) {
     const { title, description, curriculum_parameters, file } = request.body;
     const { portfolio_id } = request.params;
 
-    const portfolio = await Portfolio.findById(portfolio_id);
+    console.log(portfolio_id);
 
-    const observation = await Observation.create({
+    const createObservation = new CreateObservationService();
+
+    const observation = await createObservation.execute({
       title,
       description,
       curriculum_parameters,
       file,
+      portfolio_id,
     });
 
-    portfolio.observations.push(observation);
-
-    await portfolio.save();
-
     return response.json(observation);
-    // return response.status(400).json(err.message);
   },
 
   async update(request, response) {
@@ -56,7 +55,7 @@ module.exports = {
   async delete(request, response) {
     const { observation_id, portfolio_id } = request.params;
 
-    const deleteObservation = new DeleteObservation();
+    const deleteObservation = new DeleteObservationService();
 
     const portfolio = await deleteObservation.execute({
       observation_id,
