@@ -1,23 +1,23 @@
 const User = require('../models/User');
 const AppError = require('../errors/AppError');
+const UpdateProfileService = require('../services/UpdateProfileService');
 
 module.exports = {
   async put(request, response) {
-    const { email, name, password } = request.body;
+    const { email, name, password, old_password } = request.body;
     const { id } = request.user;
-    const user = await User.findOneAndUpdate(
-      id,
-      {
-        email,
-        name,
-        password,
-        updated_at: new Date(),
-      },
-      { new: true },
-    );
+
+    const updateProfile = new UpdateProfileService();
+
+    const user = await updateProfile.execute({
+      email,
+      name,
+      password,
+      old_password,
+      user_id: id,
+    });
 
     return response.json(user);
-    // return response.status(400).json(err.message);
   },
 
   async show(request, response) {

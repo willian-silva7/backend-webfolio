@@ -11,7 +11,7 @@ module.exports = {
 
     const portfolio = await portifolioService.execute({
       nameChildren,
-      id,
+      user_id: id,
     });
 
     return response.json(portfolio);

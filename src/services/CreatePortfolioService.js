@@ -3,8 +3,8 @@ const Portfolio = require('../models/Portfolio');
 const AppError = require('../errors/AppError');
 
 class CreatePortifolioService {
-  async execute({ nameChildren, id }) {
-    const user = await User.findById(id);
+  async execute({ nameChildren, user_id }) {
+    const user = await User.findById(user_id);
 
     if (!user) {
       throw new AppError('Usuário não possui cadastro no sistema');
