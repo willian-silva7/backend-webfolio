@@ -6,7 +6,7 @@ const AppError = require('../errors/AppError');
 
 module.exports = {
   async create(request, response) {
-    const { title, description, curriculum_parameters, file } = request.body;
+    const { title, description, curriculum_parameters, files } = request.body;
     const { portfolio_id } = request.params;
 
     const createObservation = new CreateObservationService();
@@ -15,30 +15,42 @@ module.exports = {
       title,
       description,
       curriculum_parameters,
-      file,
+      files,
       portfolio_id,
     });
 
     return response.json(observation);
   },
 
-  // async update(request, response) {
-  //   try {
-  // const user = await User.findOneAndUpdate(
-  //   user_id,
-  //   {
-  //     email,
-  //     name,
-  //     password: passwordHashed,
-  //     updated_at: new Date(),
-  //   },
-  //   { new: true },
-  // );
-  //     return response.json({ ok: true });
-  //   } catch (err) {
-  //     return response.status(400).json('Erro ao carregar Portfolios');
-  //   }
-  // },
+  async update(request, response) {
+    try {
+      const { title, description, curriculum_parameters, files } = request.body;
+      const { observation_id } = request.params;
+      const { portfolio_id } = request.params;
+
+      const observation = await Observation.findByIdAndUpdate(
+        observation_id,
+        {
+          title,
+          description,
+          curriculum_parameters,
+          files,
+          updated_at: new Date(),
+        },
+        { new: true },
+      );
+
+      const portfolio = await Portfolio.findById(portfolio_id);
+
+      portfolio.observations[observation_id] = observation;
+
+      await portfolio.save();
+
+      return response.json(observation);
+    } catch (err) {
+      return response.status(400).json('Erro ao carregar Portfolios');
+    }
+  },
 
   // async index(request, response) {
   //   const { id } = request.user;

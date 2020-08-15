@@ -3,7 +3,7 @@ const AppError = require('../errors/AppError');
 const UpdateProfileService = require('../services/UpdateProfileService');
 
 module.exports = {
-  async put(request, response) {
+  async update(request, response) {
     const { email, name, password, old_password } = request.body;
     const { id } = request.user;
 

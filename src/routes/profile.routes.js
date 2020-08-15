@@ -7,6 +7,6 @@ const profileRouter = Router();
 profileRouter.use(ensureAuthenticated);
 
 profileRouter.get('/', ProfileController.show);
-profileRouter.put('/', ProfileController.put);
+profileRouter.put('/', ProfileController.update);
 
 module.exports = profileRouter;

@@ -21,4 +21,6 @@ portfoliosRouter.delete(
   ObservationController.delete,
 );
 
+portfoliosRouter.put('/:observation_id', ObservationController.update);
+
 module.exports = portfoliosRouter;

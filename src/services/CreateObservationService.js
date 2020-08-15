@@ -7,7 +7,7 @@ class DeleteObservationService {
     title,
     description,
     curriculum_parameters,
-    file,
+    files,
     portfolio_id,
   }) {
     const portfolio = await Portfolio.findById(portfolio_id);
@@ -19,7 +19,7 @@ class DeleteObservationService {
       title,
       description,
       curriculum_parameters,
-      file,
+      files,
     });
 
     if (!observation) {
