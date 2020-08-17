@@ -10,6 +10,7 @@ portfoliosRouter.get('/', PortfolioController.index);
 portfoliosRouter.get('/:portfolio_id', PortfolioController.show);
 portfoliosRouter.post('/', PortfolioController.create);
 portfoliosRouter.delete('/:portfolio_id', PortfolioController.delete);
+portfoliosRouter.put('/:portfolio_id', PortfolioController.update);
 
 portfoliosRouter.post(
   '/:portfolio_id/observation',
@@ -20,7 +21,5 @@ portfoliosRouter.delete(
   '/:portfolio_id/observation/:observation_id',
   ObservationController.delete,
 );
-
-portfoliosRouter.put('/:observation_id', ObservationController.update);
 
 module.exports = portfoliosRouter;

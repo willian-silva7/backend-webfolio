@@ -1,15 +1,16 @@
 const Portfolio = require('../models/Portfolio');
 const CreatePortfolioService = require('../services/CreatePortfolioService');
 const AppError = require('../errors/AppError');
+const UpdatePortfolionService = require('../services/UpdatePortfolioService');
 
 module.exports = {
   async create(request, response) {
     const { nameChildren } = request.body;
     const { id } = request.user;
 
-    const portifolioService = new CreatePortfolioService();
+    const createPortfolio = new CreatePortfolioService();
 
-    const portfolio = await portifolioService.execute({
+    const portfolio = await createPortfolio.execute({
       nameChildren,
       user_id: id,
     });
@@ -51,6 +52,20 @@ module.exports = {
     if (!portfolio) {
       throw new AppError('Erro ao deletar Portfolio');
     }
+
+    return response.json(portfolio);
+  },
+
+  async update(request, response) {
+    const { nameChildren } = request.body;
+    const { portfolio_id } = request.params;
+
+    const updatePortifolio = new UpdatePortfolionService();
+
+    const portfolio = await updatePortifolio.execute({
+      nameChildren,
+      portfolio_id,
+    });
 
     return response.json(portfolio);
   },

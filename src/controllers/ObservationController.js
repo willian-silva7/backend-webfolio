@@ -1,7 +1,7 @@
-const Portfolio = require('../models/Portfolio');
 const Observation = require('../models/Observation');
 const DeleteObservationService = require('../services/DeleteObservationService');
 const CreateObservationService = require('../services/CreateObservationService');
+const UpdateObservationService = require('../services/UpdateObservationService');
 const AppError = require('../errors/AppError');
 
 module.exports = {
@@ -23,61 +23,35 @@ module.exports = {
   },
 
   async update(request, response) {
-    try {
-      const { title, description, curriculum_parameters, files } = request.body;
-      const { observation_id } = request.params;
-      const { portfolio_id } = request.params;
+    const { title, description, curriculum_parameters, files } = request.body;
+    const { observation_id } = request.params;
+    const { portfolio_id } = request.params;
 
-      const observation = await Observation.findByIdAndUpdate(
-        observation_id,
-        {
-          title,
-          description,
-          curriculum_parameters,
-          files,
-          updated_at: new Date(),
-        },
-        { new: true },
-      );
+    const updateObservation = new UpdateObservationService();
 
-      const portfolio = await Portfolio.findById(portfolio_id);
+    const observation = await updateObservation.execute({
+      title,
+      description,
+      curriculum_parameters,
+      files,
+      portfolio_id,
+      observation_id,
+    });
 
-      portfolio.observations[observation_id] = observation;
-
-      await portfolio.save();
-
-      return response.json(observation);
-    } catch (err) {
-      return response.status(400).json('Erro ao carregar Portfolios');
-    }
+    return response.json(observation);
   },
 
-  // async index(request, response) {
-  //   const { id } = request.user;
-  //   const portfolios = await Portfolio.find({
-  //     educator: id,
-  //   }).populate('educator');
+  async show(request, response) {
+    const { observation_id } = request.params;
 
-  //   if (!portfolios) {
-  //     throw new AppError('Erro ao carregar Observação');
-  //   }
+    const observation = await Observation.findById(observation_id);
 
-  //   return response.json(portfolios);
-  // },
+    if (!observation) {
+      throw new AppError('Erro ao carregar Observação');
+    }
 
-  // async show(request, response) {
-  //   const { portfolio_id } = request.params;
-
-  //   const portfolio = await Portfolio.findById(portfolio_id).populate(
-  //     'educator',
-  //   );
-
-  //   if (!portfolio) {
-  //     throw new AppError('Erro ao carregar Observação');
-  //   }
-
-  //   return response.json(portfolio);
-  // },
+    return response.json(observation);
+  },
 
   async delete(request, response) {
     const { observation_id, portfolio_id } = request.params;

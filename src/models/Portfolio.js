@@ -8,6 +8,7 @@ const PortfolioSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  permissions: [{ type: String }],
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
 });

@@ -11,4 +11,6 @@ observationsRouter.put(
   ObservationController.update,
 );
 
+observationsRouter.get('/:observation_id', ObservationController.show);
+
 module.exports = observationsRouter;

@@ -13,6 +13,7 @@ class CreatePortifolioService {
     const portfolio = await Portfolio.create({
       nameChildren,
       educator: user,
+      permissions: user.email,
     });
 
     if (!portfolio) {
