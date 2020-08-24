@@ -5,6 +5,7 @@ const sessionsRouter = require('./sessions.routes');
 const portfoliosRouter = require('./portfolios.routes');
 const profileRouter = require('./profile.routes');
 const observationsRouter = require('./observations.routes');
+const passwordRouter = require('./password.routes');
 
 const routes = Router();
 
@@ -17,5 +18,6 @@ routes.use('/sessions', sessionsRouter);
 routes.use('/portifolio', portfoliosRouter);
 routes.use('/profile', profileRouter);
 routes.use('/observation', observationsRouter);
+routes.use('/password', passwordRouter);
 
 module.exports = routes;
