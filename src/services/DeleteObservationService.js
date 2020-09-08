@@ -6,6 +6,7 @@ class DeleteObservationService {
   async execute({ observation_id, portfolio_id }) {
     const portfolio = await Portfolio.findById(portfolio_id).populate(
       'educator',
+      '-password',
     );
 
     if (!portfolio) {

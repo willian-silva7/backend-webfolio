@@ -1,4 +1,3 @@
-const AuthenticateUserService = require('../services/AuthenticateUserService');
 const SendForgotPasswordEmailService = require('../services/SendForgotPasswordEmailService');
 
 module.exports = {

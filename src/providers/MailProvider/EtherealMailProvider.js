@@ -1,7 +1,10 @@
 const nodemailer = require('nodemailer');
+const MailTemplateProvider = require('../MailTemplateProvider/HandlebarsMailTemplateProvider');
 
 class EtherealMailProvider {
   async sendMail(forgottenUserData) {
+    const { to, body, forgotPasswordTemplate } = forgottenUserData;
+    const mailTemplateProvider = new MailTemplateProvider();
     nodemailer.createTestAccount((err, account) => {
       const smtpConfig = {
         host: account.smtp.host,
@@ -15,12 +18,20 @@ class EtherealMailProvider {
 
       const transporter = nodemailer.createTransport(smtpConfig);
 
+      const templateData = {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: to.name,
+          link: `https://localhost:3333/`,
+        },
+      };
+
       const mailOptions = {
         from: { name: 'Equipe WebFólio', address: 'equipe@webfolio.com.br' },
-        to: { address: forgottenUserData.to.email },
-        subject: 'Email de Recuperação de Senha',
-        text: forgottenUserData.body,
-        html: forgottenUserData.body,
+        to: { address: to.email },
+        subject: '[WebFólio] Recuperação de Senha',
+        text: body,
+        html: body,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

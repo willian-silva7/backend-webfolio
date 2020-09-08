@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./routes');
 const AppError = require('./errors/AppError');
+const uploadConfig = require('./config/upload');
 
 mongoose.connect(process.env.MONGO_SECRET, {
   useNewUrlParser: true,
@@ -19,6 +20,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 
 app.use((err, request, response, next) => {

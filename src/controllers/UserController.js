@@ -1,6 +1,4 @@
-const User = require('../models/User');
 const CreateUserService = require('../services/CreateUserService');
-const AppError = require('../errors/AppError');
 
 module.exports = {
   async create(request, response) {

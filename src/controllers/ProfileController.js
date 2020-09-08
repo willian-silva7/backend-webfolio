@@ -22,7 +22,7 @@ module.exports = {
 
   async show(request, response) {
     const { id } = request.user;
-    const user = await User.findById(id);
+    const user = await User.findById(id, '-password');
 
     if (!user) {
       throw new AppError('Usuário não encontrado no sistema, tente mais tarde');
