@@ -8,6 +8,7 @@ const cors = require('cors');
 const routes = require('./routes');
 const AppError = require('./errors/AppError');
 const uploadConfig = require('./config/upload');
+const rateLimiterMiddleware = require('./middlewares/rateLimiter');
 
 mongoose.connect(process.env.MONGO_SECRET, {
   useNewUrlParser: true,
@@ -21,6 +22,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.directory));
+app.use(rateLimiterMiddleware);
 app.use(routes);
 
 app.use((err, request, response, next) => {
