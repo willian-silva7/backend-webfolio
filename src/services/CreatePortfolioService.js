@@ -3,7 +3,7 @@ const Portfolio = require('../models/Portfolio');
 const AppError = require('../errors/AppError');
 
 class CreatePortifolioService {
-  async execute({ nameChildren, user_id }) {
+  async execute({ nameChildren, user_id, email }) {
     const user = await User.findById(user_id);
 
     if (!user) {

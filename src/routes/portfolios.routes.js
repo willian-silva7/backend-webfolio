@@ -25,6 +25,7 @@ portfoliosRouter.put(
   celebrate({
     [Segments.BODY]: {
       nameChildren: Joi.string().required(),
+      email: Joi.string().email(),
     },
   }),
   PortfolioController.update,

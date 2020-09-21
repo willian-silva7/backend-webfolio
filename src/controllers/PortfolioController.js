@@ -57,7 +57,7 @@ module.exports = {
   },
 
   async update(request, response) {
-    const { nameChildren } = request.body;
+    const { nameChildren, email } = request.body;
     const { portfolio_id } = request.params;
 
     const updatePortifolio = new UpdatePortfolionService();
@@ -65,6 +65,7 @@ module.exports = {
     const portfolio = await updatePortifolio.execute({
       nameChildren,
       portfolio_id,
+      email,
     });
 
     return response.json(portfolio);

@@ -2,7 +2,7 @@ const Portfolio = require('../models/Portfolio');
 const AppError = require('../errors/AppError');
 
 class SearchObjectService {
-  async execute({ nameChildren, portfolio_id }) {
+  async execute({ nameChildren, portfolio_id, email }) {
     const portfolio = await Portfolio.findById(portfolio_id);
 
     if (!portfolio) {
@@ -10,6 +10,10 @@ class SearchObjectService {
     }
 
     portfolio.nameChildren = nameChildren;
+
+    if (email) {
+      portfolio.permissions.push(email);
+    }
 
     await portfolio.save();
 
