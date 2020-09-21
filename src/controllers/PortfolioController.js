@@ -2,6 +2,7 @@ const Portfolio = require('../models/Portfolio');
 const CreatePortfolioService = require('../services/CreatePortfolioService');
 const AppError = require('../errors/AppError');
 const UpdatePortfolionService = require('../services/UpdatePortfolioService');
+const ShowPortfolioService = require('../services/ShowPortfolioService');
 
 module.exports = {
   async create(request, response) {
@@ -33,14 +34,14 @@ module.exports = {
 
   async show(request, response) {
     const { portfolio_id } = request.params;
-    const portfolio = await Portfolio.findById(portfolio_id).populate([
-      'educator',
-      'observations',
-    ]);
+    const { id } = request.user;
 
-    if (!portfolio) {
-      throw new AppError('Erro ao encontrar o portfolio, tente novamente');
-    }
+    const showPortfolio = new ShowPortfolioService();
+
+    const portfolio = await showPortfolio.execute({
+      portfolio_id,
+      user_id: id,
+    });
 
     return response.json(portfolio);
   },

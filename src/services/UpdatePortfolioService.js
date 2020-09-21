@@ -1,7 +1,7 @@
 const Portfolio = require('../models/Portfolio');
 const AppError = require('../errors/AppError');
 
-class SearchObjectService {
+class UpdatePortfolioService {
   async execute({ nameChildren, portfolio_id, email }) {
     const portfolio = await Portfolio.findById(portfolio_id);
 
@@ -21,4 +21,4 @@ class SearchObjectService {
   }
 }
 
-module.exports = SearchObjectService;
+module.exports = UpdatePortfolioService;
