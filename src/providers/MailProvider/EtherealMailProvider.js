@@ -3,7 +3,7 @@ const MailTemplateProvider = require('../MailTemplateProvider/HandlebarsMailTemp
 
 class EtherealMailProvider {
   async sendMail(forgottenUserData) {
-    const { to, body, forgotPasswordTemplate } = forgottenUserData;
+    const { to, body, forgotPasswordTemplate, subject } = forgottenUserData;
     const mailTemplateProvider = new MailTemplateProvider();
     nodemailer.createTestAccount((err, account) => {
       const smtpConfig = {
@@ -29,7 +29,7 @@ class EtherealMailProvider {
       const mailOptions = {
         from: { name: 'Equipe WebFólio', address: 'equipe@webfolio.com.br' },
         to: { address: to.email },
-        subject: '[WebFólio] Recuperação de Senha',
+        subject,
         text: body,
         html: body,
       };

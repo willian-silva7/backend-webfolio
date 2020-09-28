@@ -15,7 +15,7 @@ routes.get('/', (request, response) => {
 
 routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
-routes.use('/portifolio', portfoliosRouter);
+routes.use('/portfolio', portfoliosRouter);
 routes.use('/profile', profileRouter);
 routes.use('/observation', observationsRouter);
 routes.use('/password', passwordRouter);

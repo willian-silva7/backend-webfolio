@@ -32,6 +32,7 @@ class SendForgotPasswordEmailService {
     await mailProvider.sendMail({
       to: user,
       body: `Pedido de Recuperação de Senha recebido: ${userToken.token}`,
+      subject: '[WebFólio] Recuperação de Senha',
       forgotPasswordTemplate,
     });
   }
