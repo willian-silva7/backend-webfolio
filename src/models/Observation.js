@@ -4,7 +4,7 @@ const ObservationSchema = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
   curriculum_parameters: { type: String },
-  files: [{ type: String }],
+  files: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File', default: [] }],
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
 });

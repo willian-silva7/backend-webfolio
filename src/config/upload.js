@@ -16,4 +16,7 @@ module.exports = {
       return callback(null, filename);
     },
   }),
+
+  // limits: {},
+  // fileFilter: (request, file, callback) => {},
 };

@@ -23,7 +23,7 @@ module.exports = {
   },
 
   async update(request, response) {
-    const { title, description, curriculum_parameters, files } = request.body;
+    const { title, description, curriculum_parameters } = request.body;
     const { observation_id } = request.params;
     const { portfolio_id } = request.params;
 
@@ -33,7 +33,6 @@ module.exports = {
       title,
       description,
       curriculum_parameters,
-      files,
       portfolio_id,
       observation_id,
     });

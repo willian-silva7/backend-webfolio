@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { celebrate, Segments, Joi } = require('celebrate');
 const PortfolioController = require('../controllers/PortfolioController');
+const PermissionController = require('../controllers/PermissionController');
 const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 const ObservationController = require('../controllers/ObservationController');
 
@@ -25,10 +26,19 @@ portfoliosRouter.put(
   celebrate({
     [Segments.BODY]: {
       nameChildren: Joi.string().required(),
-      email: Joi.string().email(),
     },
   }),
   PortfolioController.update,
+);
+
+portfoliosRouter.put(
+  '/:portfolio_id/permission',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+    },
+  }),
+  PermissionController.update,
 );
 
 portfoliosRouter.post(

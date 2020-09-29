@@ -7,7 +7,6 @@ class UpdateObservationService {
     title,
     description,
     curriculum_parameters,
-    files,
     portfolio_id,
     observation_id,
   }) {
@@ -22,7 +21,6 @@ class UpdateObservationService {
         title,
         description,
         curriculum_parameters,
-        files,
         updated_at: new Date(),
       },
       { new: true },

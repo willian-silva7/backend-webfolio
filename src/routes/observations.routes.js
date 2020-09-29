@@ -19,8 +19,8 @@ observationsRouter.put(
 observationsRouter.get('/:observation_id', ObservationController.show);
 
 observationsRouter.put(
-  '/files/:portfolio_id/:observation_id',
-  upload.any('avatar'),
+  '/file/:portfolio_id/:observation_id',
+  upload.single('file'),
   ObservationFilesController.update,
 );
 
