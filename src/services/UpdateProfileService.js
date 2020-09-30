@@ -4,7 +4,7 @@ const AppError = require('../errors/AppError');
 
 class UpdateProfileService {
   async execute({ name, email, password, old_password, user_id }) {
-    const user = await User.findById(user_id);
+    let user = await User.findById(user_id);
 
     if (!user) {
       throw new AppError('Usuário não Encontrado');
@@ -36,6 +36,8 @@ class UpdateProfileService {
     user.updated_at = new Date();
 
     await user.save();
+
+    user = await User.findById(user.id, '-password');
 
     return user;
   }

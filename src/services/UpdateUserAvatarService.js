@@ -22,6 +22,7 @@ class UpdateUserAvatarService {
     }
 
     user.avatar = avatarFilename;
+    user.updated_at = new Date();
 
     await user.save();
 

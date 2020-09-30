@@ -21,7 +21,7 @@ class SendObservationFilesService {
     observation.updated_at = new Date();
     await observation.save();
 
-    return createdFile;
+    return { observation, createdFile };
   }
 }
 

@@ -7,7 +7,7 @@ const AppError = require('../errors/AppError');
 
 class AuthenticateUserService {
   async execute({ email, password }) {
-    const user = await User.findOne({ email: `${email}` });
+    let user = await User.findOne({ email: `${email}` });
 
     if (!user) {
       throw new AppError('Incorrect email/password combination', 401);
@@ -25,6 +25,8 @@ class AuthenticateUserService {
       subject: user.id,
       expiresIn,
     });
+
+    user = await User.findById(user.id, '-password');
 
     return { user, token };
   }

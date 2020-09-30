@@ -11,12 +11,12 @@ module.exports = {
 
     const updateObservation = new SendObservationFilesService();
 
-    const observation = await updateObservation.execute({
+    const { observation, createdFile } = await updateObservation.execute({
       file,
       observation_id,
     });
 
-    return response.json(observation);
+    return response.json({ observation, createdFile });
   },
 
   async delete(request, response) {
