@@ -23,7 +23,7 @@ module.exports = {
     const { id } = request.user;
     const portfolios = await Portfolio.find({
       educator: id,
-    }).populate('educator');
+    }).populate('educator', '-password');
 
     if (!portfolios) {
       throw new AppError('Erro ao encontrar o portfolio, tente novamente');
