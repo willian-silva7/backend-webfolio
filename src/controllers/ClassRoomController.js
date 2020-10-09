@@ -3,24 +3,24 @@ const AppError = require('../errors/AppError');
 
 module.exports = {
   async index(request, response) {
-    const user = await ClassRoom.find();
+    const classRoom = await ClassRoom.find();
 
-    if (!user) {
+    if (!classRoom) {
       throw new AppError('Nenhuma Turma encontrada');
     }
 
-    return response.json(user);
+    return response.json(classRoom);
   },
 
   async show(request, response) {
     const { classroom_id } = request.params;
 
-    const user = await ClassRoom.findById(classroom_id);
+    const classRoom = await ClassRoom.findById(classroom_id);
 
-    if (!user) {
+    if (!classRoom) {
       throw new AppError('Turma não encontrada');
     }
 
-    return response.json(user);
+    return response.json(classRoom);
   },
 };
