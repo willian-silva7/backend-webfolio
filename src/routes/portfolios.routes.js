@@ -15,6 +15,8 @@ portfoliosRouter.post(
   celebrate({
     [Segments.BODY]: {
       nameChildren: Joi.string().required(),
+      age: Joi.number().required(),
+      classRoom: Joi.string().required(),
     },
   }),
   PortfolioController.create,
@@ -26,6 +28,8 @@ portfoliosRouter.put(
   celebrate({
     [Segments.BODY]: {
       nameChildren: Joi.string().required(),
+      age: Joi.number().required(),
+      classRoom: Joi.string().required(),
     },
   }),
   PortfolioController.update,

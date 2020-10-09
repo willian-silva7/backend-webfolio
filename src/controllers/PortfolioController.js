@@ -6,13 +6,15 @@ const ShowPortfolioService = require('../services/ShowPortfolioService');
 
 module.exports = {
   async create(request, response) {
-    const { nameChildren } = request.body;
+    const { nameChildren, age, classRoom } = request.body;
     const { id } = request.user;
 
     const createPortfolio = new CreatePortfolioService();
 
     const portfolio = await createPortfolio.execute({
       nameChildren,
+      age,
+      classRoom,
       user_id: id,
     });
 
@@ -58,7 +60,7 @@ module.exports = {
   },
 
   async update(request, response) {
-    const { nameChildren, email } = request.body;
+    const { nameChildren, age, classRoom } = request.body;
     const { portfolio_id } = request.params;
 
     const updatePortifolio = new UpdatePortfolionService();
@@ -66,7 +68,8 @@ module.exports = {
     const portfolio = await updatePortifolio.execute({
       nameChildren,
       portfolio_id,
-      email,
+      age,
+      classRoom,
     });
 
     return response.json(portfolio);

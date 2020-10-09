@@ -7,12 +7,9 @@ const profileRouter = require('./profile.routes');
 const observationsRouter = require('./observations.routes');
 const passwordRouter = require('./password.routes');
 const filesRouter = require('./files.routes');
+const classRoomRouter = require('./classroom.routes');
 
 const routes = Router();
-
-routes.get('/', (request, response) => {
-  return response.json({ message: 'Hello World' });
-});
 
 routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
@@ -21,5 +18,6 @@ routes.use('/profile', profileRouter);
 routes.use('/observation', observationsRouter);
 routes.use('/password', passwordRouter);
 routes.use('/files', filesRouter);
+routes.use('/classrooms', classRoomRouter);
 
 module.exports = routes;
