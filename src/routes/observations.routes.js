@@ -3,6 +3,7 @@ const multer = require('multer');
 const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 const ObservationController = require('../controllers/ObservationController');
 const ObservationFilesController = require('../controllers/ObservationFilesController');
+const ObservationToClassroom = require('../controllers/ObservationToClassroom');
 
 const uploadConfig = require('../config/upload');
 
@@ -11,6 +12,8 @@ const upload = multer(uploadConfig);
 const observationsRouter = Router();
 
 observationsRouter.use(ensureAuthenticated);
+observationsRouter.post('/', ObservationToClassroom.create);
+
 observationsRouter.put(
   '/:portfolio_id/:observation_id',
   ObservationController.update,

@@ -1,5 +1,4 @@
 const SendObservationFilesService = require('../services/SendObservationFilesService');
-const File = require('../models/File');
 const DeleteFileService = require('../services/DeleteFileService');
 
 module.exports = {

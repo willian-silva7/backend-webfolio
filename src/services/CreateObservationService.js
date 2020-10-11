@@ -2,7 +2,7 @@ const AppError = require('../errors/AppError');
 const Portfolio = require('../models/Portfolio');
 const Observation = require('../models/Observation');
 
-class DeleteObservationService {
+class CreateObservationService {
   async execute({
     title,
     description,
@@ -34,4 +34,4 @@ class DeleteObservationService {
   }
 }
 
-module.exports = DeleteObservationService;
+module.exports = CreateObservationService;
