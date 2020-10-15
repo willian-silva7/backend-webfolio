@@ -1,9 +1,13 @@
 const { Router } = require('express');
+const multer = require('multer');
 const { celebrate, Segments, Joi } = require('celebrate');
 const PortfolioController = require('../controllers/PortfolioController');
 const PermissionController = require('../controllers/PermissionController');
 const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 const ObservationController = require('../controllers/ObservationController');
+const uploadConfig = require('../config/upload');
+
+const upload = multer(uploadConfig);
 
 const portfoliosRouter = Router();
 
@@ -47,6 +51,7 @@ portfoliosRouter.put(
 
 portfoliosRouter.post(
   '/:portfolio_id/observation',
+  upload.array('files'),
   ObservationController.create,
 );
 

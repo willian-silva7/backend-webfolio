@@ -16,8 +16,6 @@ class CreateUserService {
       name,
       email,
       password: passwordHashed,
-      avatar:
-        'https://images.unsplash.com/photo-1585570796212-2af28ee5c118?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=60&q=60',
     });
 
     const user = await User.findById(createUser.id, '-password');

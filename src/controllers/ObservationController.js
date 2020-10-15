@@ -6,8 +6,9 @@ const AppError = require('../errors/AppError');
 
 module.exports = {
   async create(request, response) {
-    const { title, description, curriculum_parameters, files } = request.body;
+    const { title, description, curriculum_parameters } = request.body;
     const { portfolio_id } = request.params;
+    const requestFile = request.files;
 
     const createObservation = new CreateObservationService();
 
@@ -15,7 +16,7 @@ module.exports = {
       title,
       description,
       curriculum_parameters,
-      files,
+      requestFile,
       portfolio_id,
     });
 

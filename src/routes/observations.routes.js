@@ -12,7 +12,11 @@ const upload = multer(uploadConfig);
 const observationsRouter = Router();
 
 observationsRouter.use(ensureAuthenticated);
-observationsRouter.post('/', ObservationToClassroom.create);
+observationsRouter.post(
+  '/',
+  upload.array('files'),
+  ObservationToClassroom.create,
+);
 
 observationsRouter.put(
   '/:portfolio_id/:observation_id',
