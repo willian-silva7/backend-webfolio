@@ -1,8 +1,8 @@
 const CreateObservationForClassRoomService = require('../services/CreateObservationForClassRoomService');
-/// arrumar
+
 module.exports = {
   async create(request, response) {
-    const requestFiles = request.files;
+    const requestFile = request.files;
 
     const {
       title,
@@ -17,7 +17,7 @@ module.exports = {
       title,
       description,
       curriculum_parameters,
-      requestFiles,
+      requestFile,
       portfolios,
     });
 

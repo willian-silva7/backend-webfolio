@@ -2,7 +2,7 @@ const { Router } = require('express');
 const multer = require('multer');
 const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 const ObservationController = require('../controllers/ObservationController');
-const ObservationFilesController = require('../controllers/ObservationFilesController');
+const FilesController = require('../controllers/FilesController');
 const ObservationToClassroom = require('../controllers/ObservationToClassroom');
 
 const uploadConfig = require('../config/upload');
@@ -28,7 +28,7 @@ observationsRouter.get('/:observation_id', ObservationController.show);
 observationsRouter.put(
   '/file/:portfolio_id/:observation_id',
   upload.single('file'),
-  ObservationFilesController.update,
+  FilesController.update,
 );
 
 module.exports = observationsRouter;

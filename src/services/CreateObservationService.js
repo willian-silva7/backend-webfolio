@@ -26,23 +26,25 @@ class CreateObservationService {
       throw new AppError('Erro ao Criar Observação');
     }
 
-    await Promise.all(
-      requestFile.map(async file => {
-        const newFile = new File({
-          name: file.originalname,
-          size: file.size,
-          key: file.filename,
-          path: file.path,
-          url: '',
-        });
+    if (requestFile) {
+      await Promise.all(
+        requestFile.map(async file => {
+          const newFile = new File({
+            name: file.originalname,
+            size: file.size,
+            key: file.filename,
+            path: file.path,
+            url: '',
+          });
 
-        await newFile.save();
+          await newFile.save();
 
-        observation.files.push(newFile);
-      }),
-    );
+          observation.files.push(newFile);
+        }),
+      );
 
-    await observation.save();
+      await observation.save();
+    }
 
     portfolio.observations.push(observation);
     await portfolio.save();

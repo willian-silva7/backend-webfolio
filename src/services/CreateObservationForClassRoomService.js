@@ -2,25 +2,22 @@
 const AppError = require('../errors/AppError');
 const Portfolio = require('../models/Portfolio');
 const Observation = require('../models/Observation');
-/// arrumar
+const File = require('../models/File');
+
 class CreateObservationForClassRoomService {
   async execute({
     title,
     description,
     curriculum_parameters,
-    files,
+    requestFile,
     portfolios,
   }) {
     if (!portfolios) {
       throw new AppError('Erro ao Criar as observações');
     }
 
-    const portfoliosParsed = { ...portfolios };
-
-    Object.keys(portfoliosParsed).map(async portfolio => {
-      const portfolioFounded = await Portfolio.findById(
-        portfoliosParsed[portfolio]._id,
-      );
+    portfolios.map(async portfolio => {
+      const portfolioFounded = await Portfolio.findById(portfolio._id);
 
       if (!portfolioFounded) {
         throw new AppError('Erro ao Criar Observação');
@@ -30,11 +27,30 @@ class CreateObservationForClassRoomService {
         title,
         description,
         curriculum_parameters,
-        files,
       });
 
       if (!observation) {
         throw new AppError('Erro ao Criar Observação');
+      }
+
+      if (requestFile) {
+        await Promise.all(
+          requestFile.map(async file => {
+            const newFile = new File({
+              name: file.originalname,
+              size: file.size,
+              key: file.filename,
+              path: file.path,
+              url: '',
+            });
+
+            await newFile.save();
+
+            observation.files.push(newFile);
+          }),
+        );
+
+        await observation.save();
       }
 
       portfolioFounded.observations.push(observation);
@@ -42,7 +58,7 @@ class CreateObservationForClassRoomService {
       await portfolioFounded.save();
     });
 
-    return true;
+    return portfolios;
   }
 }
 

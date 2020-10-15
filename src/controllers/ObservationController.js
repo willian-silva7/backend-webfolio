@@ -27,6 +27,7 @@ module.exports = {
     const { title, description, curriculum_parameters } = request.body;
     const { observation_id } = request.params;
     const { portfolio_id } = request.params;
+    const requestFile = request.files;
 
     const updateObservation = new UpdateObservationService();
 
@@ -36,6 +37,7 @@ module.exports = {
       curriculum_parameters,
       portfolio_id,
       observation_id,
+      requestFile,
     });
 
     return response.json(observation);
