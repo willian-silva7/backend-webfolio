@@ -11,6 +11,8 @@ module.exports = {
       portfolios,
     } = request.body;
 
+    const parsedPortfolios = JSON.parse(portfolios);
+
     const createObservation = new CreateObservationForClassRoomService();
 
     const updatedPortfolios = await createObservation.execute({
@@ -18,7 +20,7 @@ module.exports = {
       description,
       curriculum_parameters,
       requestFile,
-      portfolios,
+      portfolios: parsedPortfolios,
     });
 
     return response.json(updatedPortfolios);
