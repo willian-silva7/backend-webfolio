@@ -3,7 +3,7 @@ const User = require('../models/User');
 const AppError = require('../errors/AppError');
 
 class CreateUserService {
-  async execute({ name, email, password }) {
+  async execute({ name, email, password, type }) {
     const checkUserExist = await User.findOne({ email: `${email}` });
 
     if (checkUserExist) {
@@ -16,6 +16,7 @@ class CreateUserService {
       name,
       email,
       password: passwordHashed,
+      role: type,
     });
 
     const user = await User.findById(createUser.id, '-password');

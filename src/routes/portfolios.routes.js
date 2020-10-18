@@ -6,6 +6,7 @@ const PermissionController = require('../controllers/PermissionController');
 const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 const ObservationController = require('../controllers/ObservationController');
 const uploadConfig = require('../config/upload');
+const checkUserIsEducator = require('../middlewares/checkUserIsEducator');
 
 const upload = multer(uploadConfig);
 
@@ -16,6 +17,7 @@ portfoliosRouter.get('/', PortfolioController.index);
 portfoliosRouter.get('/:portfolio_id', PortfolioController.show);
 portfoliosRouter.post(
   '/',
+  checkUserIsEducator,
   celebrate({
     [Segments.BODY]: {
       nameChildren: Joi.string().required(),
