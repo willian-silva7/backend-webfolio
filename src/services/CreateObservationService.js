@@ -10,10 +10,19 @@ class CreateObservationService {
     curriculum_parameters,
     requestFile,
     portfolio_id,
+    educator_id,
   }) {
-    const portfolio = await Portfolio.findById(portfolio_id);
+    const portfolio = await Portfolio.findById(portfolio_id).populate(
+      'educator',
+      '-password',
+    );
+
     if (!portfolio) {
       throw new AppError('Erro ao Criar Observação');
+    }
+
+    if (educator_id !== portfolio.educator.id) {
+      throw new AppError('Você não tem permissão para esta ação');
     }
 
     const observation = await Observation.create({

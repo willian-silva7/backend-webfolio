@@ -2,15 +2,24 @@ const Portfolio = require('../models/Portfolio');
 const AppError = require('../errors/AppError');
 const EtherealMailProvider = require('../providers/MailProvider/EtherealMailProvider');
 
-class AddedPortfolioPermission {
-  async execute({ portfolio_id, email }) {
-    const portfolio = await Portfolio.findById(portfolio_id);
+class AddPortfolioPermission {
+  async execute({ portfolio_id, email, educator_id }) {
+    const portfolio = await Portfolio.findById(portfolio_id).populate(
+      'educator',
+      '-password',
+    );
 
     if (!portfolio) {
       throw new AppError('Portifolio não Encontrado');
     }
 
-    portfolio.permissions.push(email);
+    if (educator_id !== portfolio.educator.id) {
+      throw new AppError('Você não tem permissão para esta ação');
+    }
+
+    if (portfolio.permissions.indexOf(email) < 0) {
+      portfolio.permissions.push(email);
+    }
 
     const user = {
       email,
@@ -29,4 +38,4 @@ class AddedPortfolioPermission {
   }
 }
 
-module.exports = AddedPortfolioPermission;
+module.exports = AddPortfolioPermission;

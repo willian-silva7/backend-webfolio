@@ -3,6 +3,7 @@ const CreatePortfolioService = require('../services/CreatePortfolioService');
 const AppError = require('../errors/AppError');
 const UpdatePortfolionService = require('../services/UpdatePortfolioService');
 const ShowPortfolioService = require('../services/ShowPortfolioService');
+const DeletePortfolioService = require('../services/DeletePortfolioService');
 
 module.exports = {
   async create(request, response) {
@@ -52,21 +53,14 @@ module.exports = {
     const { portfolio_id } = request.params;
     const { id } = request.user;
 
-    const portfolio = await Portfolio.findById(portfolio_id).populate(
-      'educator',
-    );
+    const deletePortfolio = new DeletePortfolioService();
 
-    if (id !== portfolio.educator.id) {
-      throw new AppError('Você não tem permissão para esta ação');
-    }
+    const portfolio = deletePortfolio.execute({
+      educator_id: id,
+      portfolio_id,
+    });
 
-    const errasedportfolio = await Portfolio.findByIdAndDelete(portfolio_id);
-
-    if (!portfolio) {
-      throw new AppError('Erro ao deletar Portfolio');
-    }
-
-    return response.json(errasedportfolio);
+    return response.json(portfolio);
   },
 
   async update(request, response) {

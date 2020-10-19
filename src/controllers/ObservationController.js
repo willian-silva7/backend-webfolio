@@ -1,14 +1,14 @@
-const Observation = require('../models/Observation');
 const DeleteObservationService = require('../services/DeleteObservationService');
 const CreateObservationService = require('../services/CreateObservationService');
 const UpdateObservationService = require('../services/UpdateObservationService');
-const AppError = require('../errors/AppError');
+const ShowObservationService = require('../services/ShowObservatitonService');
 
 module.exports = {
   async create(request, response) {
     const { title, description, curriculum_parameters } = request.body;
     const { portfolio_id } = request.params;
     const requestFile = request.files;
+    const { id } = request.user;
 
     const createObservation = new CreateObservationService();
 
@@ -18,6 +18,7 @@ module.exports = {
       curriculum_parameters,
       requestFile,
       portfolio_id,
+      educator_id: id,
     });
 
     return response.json(observation);
@@ -28,6 +29,7 @@ module.exports = {
     const { observation_id } = request.params;
     const { portfolio_id } = request.params;
     const requestFile = request.files;
+    const { id } = request.user;
 
     const updateObservation = new UpdateObservationService();
 
@@ -38,6 +40,7 @@ module.exports = {
       portfolio_id,
       observation_id,
       requestFile,
+      educator_id: id,
     });
 
     return response.json(observation);
@@ -45,24 +48,28 @@ module.exports = {
 
   async show(request, response) {
     const { observation_id } = request.params;
+    const { id } = request.user;
 
-    const observation = await Observation.findById(observation_id);
+    const showObservation = new ShowObservationService();
 
-    if (!observation) {
-      throw new AppError('Erro ao carregar Observação');
-    }
+    const observation = await showObservation.execute({
+      educator_id: id,
+      observation_id,
+    });
 
     return response.json(observation);
   },
 
   async delete(request, response) {
     const { observation_id, portfolio_id } = request.params;
+    const { id } = request.user;
 
     const deleteObservation = new DeleteObservationService();
 
     const portfolio = await deleteObservation.execute({
       observation_id,
       portfolio_id,
+      educator_id: id,
     });
 
     return response.json(portfolio);

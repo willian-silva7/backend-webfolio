@@ -8,12 +8,12 @@ class UpdatePortfolioService {
       'educator',
     );
 
-    if (educator_id !== portfolio.educator.id) {
-      throw new AppError('Você não tem permissão para esta ação');
-    }
-
     if (!portfolio) {
       throw new AppError('Portifolio não Encontrado');
+    }
+
+    if (educator_id !== portfolio.educator.id) {
+      throw new AppError('Você não tem permissão para esta ação');
     }
 
     const classRoomExist = await ClassRoom.findOne({ name: classRoom });
