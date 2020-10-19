@@ -11,10 +11,13 @@ class CreatePortifolioService {
       throw new AppError('Usuário não possui cadastro no sistema');
     }
 
-    const classRoomExist = await ClassRoom.findOne({ name: classRoom });
+    const classRoomExist = await ClassRoom.findOne({
+      name: classRoom,
+      educator: user.id,
+    });
 
     if (!classRoomExist) {
-      await ClassRoom.create({ name: classRoom });
+      await ClassRoom.create({ name: classRoom, educator: user });
     }
 
     const portfolio = await Portfolio.create({

@@ -3,8 +3,14 @@ const ClassRoom = require('../models/ClassRoom');
 const AppError = require('../errors/AppError');
 
 class UpdatePortfolioService {
-  async execute({ nameChildren, portfolio_id, age, classRoom }) {
-    const portfolio = await Portfolio.findById(portfolio_id);
+  async execute({ nameChildren, portfolio_id, age, classRoom, educator_id }) {
+    const portfolio = await Portfolio.findById(portfolio_id).populate(
+      'educator',
+    );
+
+    if (educator_id !== portfolio.educator.id) {
+      throw new AppError('Você não tem permissão para esta ação');
+    }
 
     if (!portfolio) {
       throw new AppError('Portifolio não Encontrado');

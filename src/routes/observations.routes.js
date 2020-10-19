@@ -6,12 +6,14 @@ const FilesController = require('../controllers/FilesController');
 const ObservationToClassroomController = require('../controllers/ObservationToClassroomController');
 
 const uploadConfig = require('../config/upload');
+const checkUserIsEducator = require('../middlewares/checkUserIsEducator');
 
 const upload = multer(uploadConfig);
 
 const observationsRouter = Router();
 
 observationsRouter.use(ensureAuthenticated);
+observationsRouter.use(checkUserIsEducator);
 observationsRouter.post(
   '/',
   upload.array('files'),

@@ -28,9 +28,15 @@ portfoliosRouter.post(
   PortfolioController.create,
 );
 
-portfoliosRouter.delete('/:portfolio_id', PortfolioController.delete);
+portfoliosRouter.delete(
+  '/:portfolio_id',
+  checkUserIsEducator,
+  PortfolioController.delete,
+);
+
 portfoliosRouter.put(
   '/:portfolio_id',
+  checkUserIsEducator,
   celebrate({
     [Segments.BODY]: {
       nameChildren: Joi.string().required(),
@@ -43,6 +49,7 @@ portfoliosRouter.put(
 
 portfoliosRouter.put(
   '/:portfolio_id/permission',
+  checkUserIsEducator,
   celebrate({
     [Segments.BODY]: {
       email: Joi.string().email().required(),
@@ -53,12 +60,14 @@ portfoliosRouter.put(
 
 portfoliosRouter.post(
   '/:portfolio_id/observation',
+  checkUserIsEducator,
   upload.array('files'),
   ObservationController.create,
 );
 
 portfoliosRouter.delete(
   '/:portfolio_id/observation/:observation_id',
+  checkUserIsEducator,
   ObservationController.delete,
 );
 

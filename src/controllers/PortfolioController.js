@@ -50,18 +50,29 @@ module.exports = {
 
   async delete(request, response) {
     const { portfolio_id } = request.params;
-    const portfolio = await Portfolio.findByIdAndDelete(portfolio_id);
+    const { id } = request.user;
+
+    const portfolio = await Portfolio.findById(portfolio_id).populate(
+      'educator',
+    );
+
+    if (id !== portfolio.educator.id) {
+      throw new AppError('Você não tem permissão para esta ação');
+    }
+
+    const errasedportfolio = await Portfolio.findByIdAndDelete(portfolio_id);
 
     if (!portfolio) {
       throw new AppError('Erro ao deletar Portfolio');
     }
 
-    return response.json(portfolio);
+    return response.json(errasedportfolio);
   },
 
   async update(request, response) {
     const { nameChildren, age, classRoom } = request.body;
     const { portfolio_id } = request.params;
+    const { id } = request.user;
 
     const updatePortifolio = new UpdatePortfolionService();
 
@@ -70,6 +81,7 @@ module.exports = {
       portfolio_id,
       age,
       classRoom,
+      educator_id: id,
     });
 
     return response.json(portfolio);
