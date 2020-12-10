@@ -23,6 +23,7 @@ class SendObservationFilesService {
       name: file.originalname,
       size: file.size,
       key: file.filename,
+      type: file.type,
       url: '',
     });
 

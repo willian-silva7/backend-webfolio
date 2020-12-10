@@ -22,6 +22,7 @@ observationsRouter.post(
 
 observationsRouter.put(
   '/:portfolio_id/:observation_id',
+  upload.array('files'),
   ObservationController.update,
 );
 

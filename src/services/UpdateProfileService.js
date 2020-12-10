@@ -3,7 +3,7 @@ const User = require('../models/User');
 const AppError = require('../errors/AppError');
 
 class UpdateProfileService {
-  async execute({ name, email, password, old_password, user_id }) {
+  async execute({ name, email, password, old_password, user_id, institution }) {
     let user = await User.findById(user_id);
 
     if (!user) {
@@ -18,6 +18,7 @@ class UpdateProfileService {
 
     user.name = name;
     user.email = email;
+    user.institution = institution;
 
     if (password && !old_password) {
       throw new AppError('Deve informar a senha antiga para atualizar a senha');

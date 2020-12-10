@@ -25,6 +25,7 @@ class CreatePortifolioService {
       age,
       classRoom,
       educator: user,
+      educator_name: user.name,
       permissions: user.email,
     });
 

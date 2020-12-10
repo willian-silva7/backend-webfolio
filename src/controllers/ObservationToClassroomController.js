@@ -9,6 +9,7 @@ module.exports = {
       description,
       curriculum_parameters,
       portfolios,
+      notes,
     } = request.body;
 
     const parsedPortfolios = JSON.parse(portfolios);
@@ -20,6 +21,7 @@ module.exports = {
       description,
       curriculum_parameters,
       requestFile,
+      notes,
       portfolios: parsedPortfolios,
     });
 

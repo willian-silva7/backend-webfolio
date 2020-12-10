@@ -6,10 +6,10 @@ class ShowPortfolioService {
   async execute({ portfolio_id, user_id }) {
     const checkedUser = await User.findById(user_id);
 
-    const portfolio = await Portfolio.findById(portfolio_id).populate([
-      ('educator', '-password'),
-      'observations',
-    ]);
+    const portfolio = await Portfolio.findById(portfolio_id).populate({
+      path: 'observations',
+      populate: { path: 'files' },
+    });
 
     if (!portfolio) {
       throw new AppError('Erro ao encontrar o portfolio, tente novamente');

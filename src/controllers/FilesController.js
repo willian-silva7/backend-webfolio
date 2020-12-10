@@ -3,11 +3,11 @@ const DeleteFileService = require('../services/DeleteFileService');
 
 module.exports = {
   async update(request, response) {
-    const { originalname, size, filename } = request.file;
+    const { originalname, size, filename, type } = request.file;
     const { observation_id } = request.params;
     const { id } = request.user;
 
-    const file = { originalname, size, filename };
+    const file = { originalname, size, filename, type };
 
     const updateObservation = new SendObservationFilesService();
 

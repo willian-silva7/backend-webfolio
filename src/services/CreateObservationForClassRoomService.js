@@ -11,6 +11,7 @@ class CreateObservationForClassRoomService {
     curriculum_parameters,
     requestFile,
     portfolios,
+    notes,
   }) {
     if (!portfolios) {
       throw new AppError('Erro ao Criar as observações');
@@ -27,6 +28,7 @@ class CreateObservationForClassRoomService {
         title,
         description,
         curriculum_parameters,
+        notes,
       });
 
       if (!observation) {
@@ -41,6 +43,7 @@ class CreateObservationForClassRoomService {
               size: file.size,
               key: file.filename,
               path: file.path,
+              type: String(file.mimetype.split('/', 1)),
               url: '',
             });
 

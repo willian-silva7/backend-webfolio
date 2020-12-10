@@ -31,7 +31,7 @@ class SendForgotPasswordEmailService {
     const mailProvider = new EtherealMailProvider();
     await mailProvider.sendMail({
       to: user,
-      body: `Pedido de Recuperação de Senha recebido: ${userToken.token}`,
+      body: `Pedido de Recuperação de Senha recebido, Entre no Link a seguir para redefinir senha:  http://localhost:3000/reset-password?token=${userToken.token} .`,
       subject: '[WebFólio] Recuperação de Senha',
       forgotPasswordTemplate,
     });

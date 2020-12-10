@@ -16,11 +16,13 @@ usersRouter.post(
       name: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-      type: Joi.string().required(),
+      institution: Joi.string(),
     },
   }),
   UserController.create,
 );
+
+usersRouter.get('/:id', UserController.index);
 
 usersRouter.patch(
   '/avatar',

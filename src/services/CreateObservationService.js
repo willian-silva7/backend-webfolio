@@ -11,6 +11,7 @@ class CreateObservationService {
     requestFile,
     portfolio_id,
     educator_id,
+    notes,
   }) {
     const portfolio = await Portfolio.findById(portfolio_id).populate(
       'educator',
@@ -29,6 +30,7 @@ class CreateObservationService {
       title,
       description,
       curriculum_parameters,
+      notes,
     });
 
     if (!observation) {
@@ -43,6 +45,7 @@ class CreateObservationService {
             size: file.size,
             key: file.filename,
             path: file.path,
+            type: String(file.mimetype.split('/', 1)),
             url: '',
           });
 
