@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(rateLimiterMiddleware);
 app.use(routes);
 
-app.use((err, request, response, next) => {
+app.use((err, request, response) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       status: 'error',

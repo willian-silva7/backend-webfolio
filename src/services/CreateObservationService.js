@@ -39,7 +39,7 @@ class CreateObservationService {
 
     if (requestFile) {
       await Promise.all(
-        requestFile.map(async file => {
+        requestFile.map(async (file) => {
           const newFile = new File({
             name: file.originalname,
             size: file.size,

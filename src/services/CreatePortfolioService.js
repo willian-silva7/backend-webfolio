@@ -4,7 +4,9 @@ const ClassRoom = require('../models/ClassRoom');
 const AppError = require('../errors/AppError');
 
 class CreatePortifolioService {
-  async execute({ nameChildren, user_id, classRoom, age }) {
+  async execute({
+    nameChildren, user_id, classRoom, age,
+  }) {
     const user = await User.findById(user_id, '-password');
 
     if (!user) {

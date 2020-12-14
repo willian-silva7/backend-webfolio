@@ -3,7 +3,9 @@ const ClassRoom = require('../models/ClassRoom');
 const AppError = require('../errors/AppError');
 
 class UpdatePortfolioService {
-  async execute({ nameChildren, portfolio_id, age, classRoom, educator_id }) {
+  async execute({
+    nameChildren, portfolio_id, age, classRoom, educator_id,
+  }) {
     const portfolio = await Portfolio.findById(portfolio_id).populate(
       'educator',
     );

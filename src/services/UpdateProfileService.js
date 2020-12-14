@@ -3,7 +3,9 @@ const User = require('../models/User');
 const AppError = require('../errors/AppError');
 
 class UpdateProfileService {
-  async execute({ name, email, password, old_password, user_id, institution }) {
+  async execute({
+    name, email, password, old_password, user_id, institution,
+  }) {
     let user = await User.findById(user_id);
 
     if (!user) {

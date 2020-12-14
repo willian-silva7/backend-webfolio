@@ -5,7 +5,9 @@ const ShowObservationService = require('../services/ShowObservatitonService');
 
 module.exports = {
   async create(request, response) {
-    const { title, description, curriculum_parameters, notes } = request.body;
+    const {
+      title, description, curriculum_parameters, notes,
+    } = request.body;
     const { portfolio_id } = request.params;
     const requestFile = request.files;
     const { id } = request.user;
@@ -26,7 +28,9 @@ module.exports = {
   },
 
   async update(request, response) {
-    const { title, description, curriculum_parameters, notes } = request.body;
+    const {
+      title, description, curriculum_parameters, notes,
+    } = request.body;
     const { observation_id } = request.params;
     const { portfolio_id } = request.params;
     const requestFile = request.files;

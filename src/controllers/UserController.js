@@ -4,7 +4,9 @@ const AppError = require('../errors/AppError');
 
 module.exports = {
   async create(request, response) {
-    const { name, password, email, institution } = request.body;
+    const {
+      name, password, email, institution,
+    } = request.body;
 
     const createUser = new CreateUserService();
 

@@ -5,8 +5,7 @@
         "node": true
     },
     "extends": [
-        "airbnb-base",
-        "plugin:prettier/recommended"
+        "airbnb-base"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -15,14 +14,8 @@
     "parserOptions": {
         "ecmaVersion": 2018
     },
-    "plugins": [
-      "prettier"
-    ],
     "rules": {
-      "prettier/prettier": "error",
-      "class-methods-use-this": "off",
       "camelcase": "off",
-      "no-unused-vars": "off",
-      "consistent-return": "off"
+      "class-methods-use-this": "off"
     }
 }

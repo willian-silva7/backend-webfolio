@@ -17,7 +17,7 @@ class CreateObservationForClassRoomService {
       throw new AppError('Erro ao Criar as observações');
     }
 
-    portfolios.map(async portfolio => {
+    portfolios.map(async (portfolio) => {
       const portfolioFounded = await Portfolio.findById(portfolio._id);
 
       if (!portfolioFounded) {
@@ -37,7 +37,7 @@ class CreateObservationForClassRoomService {
 
       if (requestFile) {
         await Promise.all(
-          requestFile.map(async file => {
+          requestFile.map(async (file) => {
             const newFile = new File({
               name: file.originalname,
               size: file.size,

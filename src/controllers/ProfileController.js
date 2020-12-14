@@ -4,7 +4,9 @@ const UpdateProfileService = require('../services/UpdateProfileService');
 
 module.exports = {
   async update(request, response) {
-    const { email, name, password, old_password, institution } = request.body;
+    const {
+      email, name, password, old_password, institution,
+    } = request.body;
     const { id } = request.user;
 
     const updateProfile = new UpdateProfileService();
