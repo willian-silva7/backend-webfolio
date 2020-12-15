@@ -1,6 +1,7 @@
 const AppError = require('../errors/AppError');
 const Portfolio = require('../models/Portfolio');
 const Observation = require('../models/Observation');
+const File = require('../models/File');
 
 class UpdateObservationService {
   async execute({
@@ -11,6 +12,7 @@ class UpdateObservationService {
     observation_id,
     educator_id,
     notes,
+    requestFile,
   }) {
     const portfolio = await Portfolio.findById(portfolio_id).populate(
       'educator',
@@ -42,6 +44,27 @@ class UpdateObservationService {
     }
 
     portfolio.observations[observation_id] = observation;
+
+    if (requestFile) {
+      await Promise.all(
+        requestFile.map(async (file) => {
+          const newFile = new File({
+            name: file.originalname,
+            size: file.size,
+            key: file.filename,
+            path: file.path,
+            type: String(file.mimetype.split('/', 1)),
+            url: '',
+          });
+
+          await newFile.save();
+
+          observation.files.push(newFile);
+        }),
+      );
+
+      await observation.save();
+    }
 
     await portfolio.save();
 
