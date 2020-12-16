@@ -1,6 +1,7 @@
 const AppError = require('../errors/AppError');
 const Portfolio = require('../models/Portfolio');
 const Observation = require('../models/Observation');
+const File = require('../models/Observation');
 
 class DeleteObservationService {
   async execute({ observation_id, portfolio_id, educator_id }) {
@@ -17,7 +18,19 @@ class DeleteObservationService {
       throw new AppError('Você não tem permissão para esta ação');
     }
 
-    const observation = await Observation.findByIdAndDelete(observation_id);
+    const observation = await Observation.findById(observation_id);
+
+    if (observation.files) {
+      await Promise.all(observation.files.map(async (file) => {
+        await File.findByIdAndDelete(file);
+
+        observation.files.pop(file);
+      }));
+    }
+
+    await observation.save();
+
+    await Observation.findByIdAndDelete(observation_id);
 
     if (!observation) {
       throw new AppError('Erro ao deletar Observação');
@@ -27,7 +40,7 @@ class DeleteObservationService {
 
     await portfolio.save();
 
-    return portfolio;
+    return observation;
   }
 }
 

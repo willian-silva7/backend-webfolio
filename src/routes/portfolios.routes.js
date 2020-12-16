@@ -58,6 +58,8 @@ portfoliosRouter.put(
   PermissionController.update,
 );
 
+// observação
+
 portfoliosRouter.post(
   '/:portfolio_id/observation',
   checkUserIsEducator,
