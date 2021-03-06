@@ -12,6 +12,7 @@ class CreateObservationService {
     portfolio_id,
     educator_id,
     notes,
+    dateDay,
   }) {
     const portfolio = await Portfolio.findById(portfolio_id).populate(
       'educator',
@@ -31,6 +32,7 @@ class CreateObservationService {
       description,
       curriculum_parameters,
       notes,
+      dateDay,
     });
 
     if (!observation) {

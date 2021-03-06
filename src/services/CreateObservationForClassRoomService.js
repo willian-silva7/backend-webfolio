@@ -12,6 +12,7 @@ class CreateObservationForClassRoomService {
     requestFile,
     portfolios,
     notes,
+    dateDay,
   }) {
     if (!portfolios) {
       throw new AppError('Erro ao Criar as observações');
@@ -29,6 +30,7 @@ class CreateObservationForClassRoomService {
         description,
         curriculum_parameters,
         notes,
+        dateDay,
       });
 
       if (!observation) {

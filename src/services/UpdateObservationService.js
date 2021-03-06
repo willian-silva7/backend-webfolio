@@ -13,6 +13,7 @@ class UpdateObservationService {
     educator_id,
     notes,
     requestFile,
+    dateDay,
   }) {
     const portfolio = await Portfolio.findById(portfolio_id).populate(
       'educator',
@@ -34,6 +35,7 @@ class UpdateObservationService {
         description,
         curriculum_parameters,
         notes,
+        dateDay,
         updated_at: new Date(),
       },
       { new: true },
